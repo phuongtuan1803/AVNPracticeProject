@@ -10,14 +10,14 @@ Window {
     Rectangle{
         anchors.fill: parent
         Text{
+            Nulo{}
             id: headerTxt
-            height: 100
+            height: 50
             anchors.centerIn: parent
             text: "THE DIVA DIVO"
         }
         Rectangle{
             anchors.top: headerTxt.bottom
-            anchors.centerIn: parent
             ProgrammingScore{
                 programming_img  : "/../rc/asm.png"
                 programming_text : "Assembly"

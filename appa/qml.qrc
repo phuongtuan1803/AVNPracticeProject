@@ -9,5 +9,6 @@
         <file>../rc/tick.png</file>
         <file>../rc/x.png</file>
         <file>ProgrammingScore.qml</file>
+        <file>Nulo.qml</file>
     </qresource>
 </RCC>
