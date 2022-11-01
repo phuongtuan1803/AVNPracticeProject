@@ -1,0 +1,6 @@
+{
+    "cmake.sourceDirectory": "${workspaceFolder}/serviceb",
+    "files.associations": {
+        "common.h": "c"
+    }
+}

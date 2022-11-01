@@ -52,6 +52,23 @@ Window {
                 programming_text : "QML"
                 programming_score: qml_score
             }
+            Timer {
+                id: loadingTimer
+                interval: 3000; running: false; repeat: false
+                onTriggered: {
+                    listView.visible = true
+                }
+            }
+            Button{
+                id: updateButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Refresh"
+                onClicked: {
+                    listView.visible = false
+                    loadingTimer.start()
+                    console.log("Timer started!")
+                }
+            }
             Row {
                 id: rowSearch
                 Text {
@@ -64,9 +81,12 @@ Window {
                     id: searchtextedit
                     width: 80
                     height: 20
-                    text: qsTr("Text Edit")
-                    //                    font.pixelSize: 12
+                    text: ""
+
                     font.styleName: "Medium Italic"
+                    onTextChanged: {
+                        employeeListModel.updateSearch(searchtextedit.text)
+                    }
                 }
             }
             Row {
@@ -90,16 +110,28 @@ Window {
                 }
                 spacing: 150
             }
+            Rectangle{
+                id: loadingRect
+                width: parent.width
+                height: 600
+                visible: !listView.visible
+                anchors.horizontalCenter: parent.horizontalCenter
+                BusyIndicator {
+                    id: busyIndicator
+                anchors.horizontalCenter: parent.horizontalCenter
+                    running: loadingRect.visible === true
+                }
+            }
             ListView {
                 id: listView
-                Nulo{}
+                objectName: "listView"
                 width: parent.width
                 height: 600
                 anchors.horizontalCenter: parent.horizontalCenter
                 flickableDirection: Flickable.VerticalFlick
                 boundsBehavior: Flickable.StopAtBounds
                 clip: true
-                model: employeeListModel
+                model: searchtextedit.text === "" ? employeeListModel : employeeFilterModel
 
                 delegate: Item {
 

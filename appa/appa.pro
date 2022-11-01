@@ -8,7 +8,8 @@ SOURCES += \
         AppAController.cpp \
         employeelistmodel.cpp \
         database.cpp \
-        main.cpp
+        main.cpp \
+        sortfilterproxymodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,4 +31,5 @@ HEADERS += \
     avnDefs.h \
     database.h \
     employeelistmodel.h \
-    nlohmann\json.hpp
+    nlohmann\json.hpp \
+    sortfilterproxymodel.h

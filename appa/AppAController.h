@@ -3,14 +3,18 @@
 
 #include <vector>
 #include <QQmlContext>
+#include <QQmlApplicationEngine>
 
 #include "avnDefs.h"
 #include "database.h"
+#include "sortfilterproxymodel.h"
 
 class AppAController{
+
 private:
 
-    AppAController(){};
+    AppAController(){
+    };
 public:
     AppAController(AppAController &other) = delete;
     void operator=(const AppAController &) = delete;
@@ -18,18 +22,15 @@ public:
     static AppAController& getInstance()
     {
         static AppAController singleton_;
-        // if(singleton_==nullptr){
-        //     singleton_ = new AppAController();
-        // }
         return singleton_;
     };
 
 public:
     QQmlContext* m_qmlcontext;
+    QQmlApplicationEngine *m_engine;
+
     QList<EmployeeScore> requestEmployeeScoreList(){
        return Database::getInstance().requestEmployeeScoreList();
-        // return QList<EmployeeInfo>::fromVector(QVector<EmployeeInfo>::fromStdVector(m_employeeList));
-
     };
 
     EmployeeInfo requestEmployeeInfo(int id){
