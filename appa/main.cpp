@@ -1,6 +1,11 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+
+#include "AppAController.h"
 #include "employeelistmodel.h"
+#include "database.h"
+#include "avnDefs.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +21,22 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+    
 
-    qmlRegisterType<EmployeeListModel>("EmployeeListModel",1,0,"EmployeeListModel");
+    QQmlContext *context = engine.rootContext();
+    AppAController::getInstance().m_qmlcontext = context;
+   Database::getInstance().loadDatabase("../rc/database.json");
+    
+    EmployeeListModel employeeListModel;
+    employeeListModel.m_employeeList = AppAController::getInstance().requestEmployeeScoreList();
+   context->setContextProperty("employeeListModel",  (&employeeListModel));
+
+   context->setContextProperty("name",  "");
+   context->setContextProperty("asm_score",  -1);
+   context->setContextProperty("cpp_score",  -1);
+   context->setContextProperty("js_score",  -1);
+   context->setContextProperty("opengl_score",  -1);
+   context->setContextProperty("qml_score",  -1);
     engine.load(url);
 
     return app.exec();

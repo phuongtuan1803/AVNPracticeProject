@@ -1,23 +1,20 @@
 #ifndef EMPLOYEELISTMODEL_H
 #define EMPLOYEELISTMODEL_H
 
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+
 #include <QAbstractListModel>
 #include <QDebug>
 #include <cstring>
-
-#define MAX_NAME_CHAR   100
+#include "avnDefs.h"
+#include "AppAController.h"
 
 class EmployeeListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
     EmployeeListModel(QObject *parent = nullptr) : QAbstractListModel(parent){
-//        EmployeeScore emp1
-        m_employeeList.append(EmployeeScore{ .name = {'N', 'a', 'm', 'e', ' ', '1'}, .score = 1});
-        m_employeeList.append(EmployeeScore{ .name = {'N', 'a', 'm', 'e', ' ', '2'}, .score = 2});
-        m_employeeList.append(EmployeeScore{ .name = {'N', 'a', 'm', 'e', ' ', '3'}, .score = 3});
-        m_employeeList.append(EmployeeScore{ .name = {'N', 'a', 'm', 'e', ' ', '4'}, .score = 4});
-        m_employeeList.append(EmployeeScore{ .name = {'N', 'a', 'm', 'e', ' ', '5'}, .score = 5});
     };
 
     enum EmployeeListRoles{
@@ -58,21 +55,40 @@ public:
             avgscore += scorelist[i];
         }
         avgscore /= scorelist.size();
-        qDebug() << "avgscore: " << avgscore;
         employeeScore.score = avgscore;
 
-        beginInsertRows(QModelIndex(), rowCount(), rowCount() + 1);
+        beginInsertRows(QModelIndex(), rowCount(), rowCount() );
         m_employeeList.append(employeeScore);
         endInsertRows();
-        qDebug() << "addItem << size : "<< m_employeeList.size();
     }
 
     Q_INVOKABLE void remove(const int index){
-
         beginRemoveRows(QModelIndex(), index, index);
         m_employeeList.removeAt(index);
         endRemoveRows();
     }
+
+    Q_INVOKABLE void select(const int index){
+        EmployeeInfo employeeInfo = AppAController::getInstance().requestEmployeeInfo(m_employeeList[index].id);
+//        strncpy(employeeInfo.name , std::string("Hello T").c_str(), MAX_NAME_CHAR);
+//        employeeInfo.asm_score = 0;
+//        employeeInfo.cpp_score = 1;
+//        employeeInfo.js_score = 2;
+//        employeeInfo.opengl_score = 3;
+//        employeeInfo.qml_score = 4;
+
+
+//        QQmlApplicationEngine engine;
+        QQmlContext *context = AppAController::getInstance().m_qmlcontext;
+
+        context->setContextProperty("name",  employeeInfo.name);
+        context->setContextProperty("asm_score",  employeeInfo.asm_score);
+        context->setContextProperty("cpp_score",  employeeInfo.cpp_score);
+        context->setContextProperty("js_score",  employeeInfo.js_score);
+        context->setContextProperty("opengl_score",  employeeInfo.opengl_score);
+        context->setContextProperty("qml_score",  employeeInfo.qml_score);
+    }
+
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override{
         if(!index.isValid()){
             return false;
@@ -94,6 +110,7 @@ public:
             break;
         }
     }
+    QList<EmployeeScore> m_employeeList;
 protected:
     QHash<int, QByteArray> roleNames() const override{
         QHash<int, QByteArray> roles;
@@ -101,8 +118,7 @@ protected:
         roles[AvgScoreRole] = "score";
         return roles;
     }
-private:
-    QList<EmployeeScore> m_employeeList;
+
 };
 
 #endif // EMPLOYEELISTMODEL_H
