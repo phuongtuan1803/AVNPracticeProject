@@ -1,5 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
+import QtQuick.Controls 2.15
+
 import EmployeeListModel 1.0
 
 Window {
@@ -7,7 +9,9 @@ Window {
     height: 700
     visible: true
     title: qsTr("Viewer")
-
+    EmployeeListModel{
+        id: employeeListModel
+    }
     Rectangle{
         anchors.fill: parent
         Column {
@@ -20,7 +24,7 @@ Window {
             spacing: 10
 
             Text{
-                Nulo{}
+//                Nulo{}
                 id: headerTxt
                 height: 50
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -80,7 +84,14 @@ Window {
                 width: parent.width
                 height: 600
                 anchors.horizontalCenter: parent.horizontalCenter
+                flickableDirection: Flickable.VerticalFlick
+                boundsBehavior: Flickable.StopAtBounds
+                clip: true
+
                 header:Row {
+                    height: 30
+                    width: parent.width/2
+                    anchors.horizontalCenter: parent.horizontalCenter
                     Text {
                         text: "Name"
                         anchors.verticalCenter: parent.verticalCenter
@@ -91,44 +102,30 @@ Window {
                         anchors.verticalCenter: parent.verticalCenter
                         font.bold: true
                     }
+                    Button {
+                        text: "Append"
+                        width: 40
+                        onClicked: employeeListModel.addItem("tuan", [1,2,3,4,5])
+                    }
                     spacing: 150
                 }
                 model: employeeListModel
-                //                model: ListModel {
-                //                    ListElement {
-                //                        emplyee_name: "Grey"
-                //                        emplyee_avg: "grey"
-                //                    }
 
-                //                    ListElement {
-                //                        emplyee_name: "Grey"
-                //                        emplyee_avg: "grey"
-                //                    }
-
-                //                    ListElement {
-                //                        emplyee_name: "Grey"
-                //                        emplyee_avg: "grey"
-                //                    }
-
-                //                    ListElement {
-                //                        emplyee_name: "Grey"
-                //                        emplyee_avg: "grey"
-                //                    }
-                //                }
                 delegate: Item {
-                    Nulo{}
-                    //                    x: 5
+
                     height: 30
                     width: parent.width/2
                     anchors.horizontalCenter: parent.horizontalCenter
                     Row {
                         id: row1
                         Text {
-                            text: emplyee_name
+                            text: name
+                            width: 100
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         Text {
-                            text: emplyee_avg
+                            Nulo{}
+                            text: score
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         spacing: 150
