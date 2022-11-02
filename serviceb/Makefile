@@ -2,7 +2,8 @@
 all:
 	mkdir -p build
 	cd build/ && cmake .. && make
-	./build/serviceb
+	# chmod 2770 ./build/serviceb_mq_server
+	# chmod 7770 ./build/serviceb_mq_client
 
 clean:
 	rm -rf build

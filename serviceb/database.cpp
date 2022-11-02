@@ -2,7 +2,6 @@
 
 std::shared_ptr<Database> Database::getInstance()
 {
-    std::cout << "Database::getInstance" << std::endl;
     static std::shared_ptr<Database> instance (new Database());
     return instance;
 }
