@@ -1,5 +1,17 @@
 #include "database.h"
 
+std::shared_ptr<Database> Database::getInstance()
+{
+    std::cout << "Database::getInstance" << std::endl;
+    static std::shared_ptr<Database> instance (new Database());
+    return instance;
+}
+
+Database::Database()
+{
+    m_employeeList.clear();
+}
+
 bool Database::loadDatabase(const std::string database_file){
     // qDebug() << "Read file: " << QString::fromStdString(database_file) ;
     std::ifstream f(database_file);
@@ -54,7 +66,7 @@ EmployeeScoreList Database::requestEmployeeScoreList(){
         es.id = e.id;
         strncpy(es.name , std::string(e.name).c_str(), MAX_NAME_CHAR);
         es.score = (e.asm_score + e.cpp_score + e.js_score + e.opengl_score + e.qml_score)/ 5;
-        retval.employeeScores[i] = es;
+        retval.l[i] = es;
         i++;
     }
     return retval;

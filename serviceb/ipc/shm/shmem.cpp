@@ -44,7 +44,7 @@ bool Shmem::getEmployeeInfo(EmployeeInfo& emplinfo)
         return false;
     }
     pthread_mutex_lock(&shm_mutex);
-    memcpy(&emplinfo, &m_ptr->t_EmployeeInfo, sizeof(emplinfo));
+    memcpy(&emplinfo, &m_ptr->SHMEM_EmployeeInfo, sizeof(emplinfo));
     pthread_mutex_unlock(&shm_mutex);
 
     return true;
@@ -57,7 +57,7 @@ bool Shmem::setEmployeeInfo(const EmployeeInfo& emplinfo)
         return false;
     }    
     pthread_mutex_lock(&shm_mutex);
-    memcpy(&m_ptr->t_EmployeeInfo, &emplinfo, sizeof(emplinfo));
+    memcpy(&m_ptr->SHMEM_EmployeeInfo, &emplinfo, sizeof(emplinfo));
     pthread_mutex_unlock(&shm_mutex);
 
     return true;
@@ -70,7 +70,7 @@ bool Shmem::getEmployeeScoreList(EmployeeScoreList& employeeList)
         return false;
     }    
     pthread_mutex_lock(&shm_mutex);
-    memcpy(&employeeList, &m_ptr->t_EmployeeScoreList, sizeof(employeeList));
+    memcpy(&employeeList, &m_ptr->SHMEM_EmployeeScoreList, sizeof(employeeList));
     pthread_mutex_unlock(&shm_mutex);
 
     return true;
@@ -83,7 +83,7 @@ bool Shmem::setEmployeeScoreList(const EmployeeScoreList& employeeList)
         return false;
     }
     pthread_mutex_lock(&shm_mutex);
-    memcpy(&m_ptr->t_EmployeeScoreList, &employeeList, sizeof(employeeList));
+    memcpy(&m_ptr->SHMEM_EmployeeScoreList, &employeeList, sizeof(employeeList));
     pthread_mutex_unlock(&shm_mutex);
     return true;
 }

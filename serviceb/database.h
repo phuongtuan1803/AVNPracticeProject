@@ -5,27 +5,20 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "../common/nlohmann/json.hpp"
+#include "../common/json.hpp"
 #include "../common/avnDefs.h"
 
 using json = nlohmann::json;
 
 class Database
 {
-protected:
-
-    Database(){
-        m_employeeList.clear();
-    };
+private:
+    Database();
 public:
+    static std::shared_ptr<Database> getInstance();
+
     Database(Database &other) = delete;
     void operator=(const Database &) = delete;
-
-    static Database& getInstance()
-    {
-        static Database singleton_;
-        return singleton_;
-    };
 
 public:
     std::vector<EmployeeInfo> m_employeeList;
