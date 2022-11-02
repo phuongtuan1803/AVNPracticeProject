@@ -1,3 +1,4 @@
-appa/appa.pro.user*
+*pro.user*
 build-*
-
+serviceb/build
+.vscode
