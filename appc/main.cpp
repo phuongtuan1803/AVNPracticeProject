@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
     AppController::getInstance().m_qmlcontext = context;
     AppController::getInstance().m_engine = &engine;
 
-
     Database::getInstance().loadDatabase("../rc/database.json");
     EmployeeListModel employeeListModel;
     employeeListModel.m_employeeList = AppController::getInstance().requestEmployeeScoreList();

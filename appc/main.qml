@@ -65,7 +65,7 @@ Window {
             Button{
                 id: updateButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Refresh"
+                text: "Update"
                 background: Rectangle {
                     color: "lightgreen"
                     width: 100

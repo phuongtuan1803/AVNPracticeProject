@@ -40,6 +40,21 @@ Q_INVOKABLE void EmployeeListModel::addItem(QString name, QList<int> scorelist )
     endInsertRows();
 }
 
+Q_INVOKABLE void EmployeeListModel::updateItem(int id, QList<int> scorelist ){
+    EmployeeScore employeeScore;
+    strncpy(employeeScore.name , name.toUtf8().data(), MAX_NAME_CHAR);
+    int avgscore = 0;
+    for(int i =0 ;i < scorelist.size() ; i++){
+        avgscore += scorelist[i];
+    }
+    avgscore /= scorelist.size();
+    employeeScore.score = avgscore;
+
+    beginInsertRows(QModelIndex(), rowCount(), rowCount() );
+    m_employeeList.append(employeeScore);
+    endInsertRows();
+}
+
 bool EmployeeListModel::setData(const QModelIndex &index, const QVariant &value, int role){
     if(!index.isValid()){
         return false;
@@ -87,6 +102,7 @@ Q_INVOKABLE void EmployeeListModel::select(const int index){
     context->setContextProperty("js_score",  employeeInfo.js_score);
     context->setContextProperty("opengl_score",  employeeInfo.opengl_score);
     context->setContextProperty("qml_score",  employeeInfo.qml_score);
+    qDebug() << employeeInfo.name;
 }
 
 Q_INVOKABLE void EmployeeListModel::updateSearch(const QString search_term){
