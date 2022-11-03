@@ -2,11 +2,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 //#include "sortfilterproxymodel.h"
-#include "AppController.h"
+#include "../common/AppController.h"
 
-#include "employeelistmodel.h"
-#include "database.h"
-#include "avnDefs.h"
+#include "../common/employeelistmodel.h"
+#include "../common/database.h"
+#include "../common/avnDefs.h"
 
 int main(int argc, char *argv[])
 {

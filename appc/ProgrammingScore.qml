@@ -5,10 +5,11 @@ Item {
     property string programming_img: ""
     property string programming_text: ""
     property int programming_score: 0
+    property string programming_score_input: pl_text_score.text
+
     width: 400
     height: 30
     onProgramming_scoreChanged: {
-        console.log("onProgramming_scoreChanged")
         pl_text_score.text = programming_score
     }
     Row {

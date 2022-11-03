@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../common/avnDefs.h"
-#include "database.h"
-#include "ipc/shm/shmem.h"
+#include "../common/database.h"
+#include "../common/ipc/shm/shmem.h"
 #include "ServiceB.h"
 #include <chrono>
 #include <thread>
@@ -29,10 +29,6 @@ void shmem_test(){
 
 int main()
 {
-    // Load database
-    Database::getInstance()->loadDatabase(std::string("../rc/database.json"));
-    cout << "Database size: " << Database::getInstance()->m_employeeList.size() << endl;
-    shmem_test();
-    // ServiceB::getInstance()->start();
+    ServiceB::getInstance()->start();
     return 0;
 }

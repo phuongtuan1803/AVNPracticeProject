@@ -1,21 +1,22 @@
 #ifndef SERVICEB_H
 #define SERVICEB_H
 
-// #include "../ipc/mp/BaseProxySync.h"
-
+#include "../common/avnDefs.h"
+#include "../common/database.h"
+#include "../common/ipc/shm/shmem.h"
+#include "../common/ipc/mq/mq_b.h"
+#include <iostream>
 class ServiceB 
 {
 
-private:
-    ServiceB();
+protected:
+
     ServiceB(ServiceB const&) = delete;
     ServiceB& operator=(ServiceB const&) = delete;
-    virtual ~ServiceB();
-
-
+    static std::shared_ptr<ServiceB> m_instance;
 public:
+    ServiceB();
     static std::shared_ptr<ServiceB> getInstance();
     void start();
-    virtual bool requestEmployeeInfoSync(EmployeeInfo& employeeInfo);
 };
 #endif // SERVICEB_H

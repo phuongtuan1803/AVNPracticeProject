@@ -5,11 +5,13 @@ QT += quick
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        AppController.cpp \
-        employeelistmodel.cpp \
-        database.cpp \
+        ../common/AppController.cpp \
+        ../common/employeelistmodel.cpp \
+        ../common/database.cpp \
+        ../common/ipc/mq/mq_ac.cpp \
+        ../common/ipc/shm/shmem.cpp \
         main.cpp \
-        sortfilterproxymodel.cpp
+        ../common/sortfilterproxymodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,9 +29,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES +=
 
 HEADERS += \
-    AppController.h \
-    avnDefs.h \
-    database.h \
-    employeelistmodel.h \
-    nlohmann\json.hpp \
-    sortfilterproxymodel.h
+    ../common/AppController.h \
+    ../common/avnDefs.h \
+    ../common/database.h \
+    ../common/employeelistmodel.h \
+    ../common/ipc/mq/mq_ac.h \
+    ../common/ipc/shm/shmem.h \
+    ../common/nlohmann\json.hpp \
+    ../common/sortfilterproxymodel.h
+
+LIBS += -lrt

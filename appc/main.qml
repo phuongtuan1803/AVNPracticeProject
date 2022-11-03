@@ -6,7 +6,7 @@ Window {
     width: 400
     height: 700
     visible: true
-    title: qsTr("Viewer")
+    title: qsTr("Viewer C")
 
     Rectangle{
         //        Nulo{}
@@ -27,30 +27,34 @@ Window {
                 font.bold: true
             }
             ProgrammingScore{
+                id : asmID
                 height: 50
                 programming_img : "/../rc/asm.png"
                 programming_text : "Assembly"
                 programming_score: asm_score
             }
             ProgrammingScore{
+                id : cppID
                 height: 50
                 programming_img  : "/../rc/cpp.png"
                 programming_text : "C++"
                 programming_score: cpp_score
             }
             ProgrammingScore{
+                id : jsID
                 height: 50
                 programming_img  : "/../rc/js.png"
                 programming_text : "Javascript"
                 programming_score: js_score
             }
             ProgrammingScore{
+                id : openglID
                 programming_img  : "/../rc/opengl.png"
                 programming_text : "OpenGL"
                 programming_score: opengl_score
             }
             ProgrammingScore{
-                id: qmlScoreId
+                id: qmlId
                 programming_img  : "/../rc/qml.png"
                 programming_text : "QML"
                 programming_score: qml_score
@@ -74,9 +78,11 @@ Window {
 
                 }
                 onClicked: {
-                    listView.visible = false
-                    loadingTimer.start()
-                    console.log("Timer started!")
+                    employeeListModel.updateItem(empid,[ parseInt(asmID.programming_score_input)
+                                                , parseInt(cppID.programming_score_input)
+                                                , parseInt(jsID.programming_score_input)
+                                                , parseInt(openglID.programming_score_input)
+                                                , parseInt(qmlId.programming_score_input)])
                 }
             }
             Row {

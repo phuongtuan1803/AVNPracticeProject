@@ -2,12 +2,12 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 //#include "sortfilterproxymodel.h"
-#include "AppController.h"
+#include "../common/AppController.h"
 
-#include "employeelistmodel.h"
-#include "database.h"
-#include "avnDefs.h"
-
+#include "../common/employeelistmodel.h"
+#include "../common/database.h"
+#include "../common/avnDefs.h"
+#include "../common/ipc/mq/mq_ac.h"
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -29,12 +29,19 @@ int main(int argc, char *argv[])
     AppController::getInstance().m_engine = &engine;
 
 
-    Database::getInstance().loadDatabase("../rc/database.json");
+    // Database::getInstance().loadDatabase("../rc/database.json");
     EmployeeListModel employeeListModel;
     employeeListModel.m_employeeList = AppController::getInstance().requestEmployeeScoreList();
     AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  &employeeListModel);
     AppController::getInstance().init();
-    engine.load(url);
+    MessageQueue::getInstance()->appa_start();
 
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+    QObject::connect(MessageQueue::getInstance(),SIGNAL(employeeInfoChanged(EmployeeInfo&)),&AppController::getInstance(),SLOT(onEmployeeInfoChanged(EmployeeInfo&)));
+    engine.load(url);    
     return app.exec();
 }

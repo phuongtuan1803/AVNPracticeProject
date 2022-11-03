@@ -11,12 +11,15 @@ std::shared_ptr<ServiceB> ServiceB::getInstance()
 }
 
 ServiceB::ServiceB(){
-
+    // Load database and save to shared mem
+    Database::getInstance()->loadDatabase(std::string("../rc/database.json"));
+    std::cout << "Database size: " << Database::getInstance()->m_employeeList.size() << std::endl;
+    EmployeeScoreList employeeScoreList = Database::getInstance()->requestEmployeeScoreList();
+    Shmem::getInstance()->setEmployeeScoreList(employeeScoreList);
 }
 
-void ServiceB::start();
 
-
-bool ServiceB::requestEmployeeInfoSync(const int id, EmployeeInfo& employeeInfo){
-
+void ServiceB::start()
+{
+    MessageQueue::getInstance()->serviceb_start();
 }

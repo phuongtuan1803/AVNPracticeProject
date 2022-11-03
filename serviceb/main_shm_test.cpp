@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../common/avnDefs.h"
 #include "database.h"
-#include "ipc/shm/shmem.h"
+#include "../common/ipc/shm/shmem.h"
 #include "ServiceB.h"
 #include <chrono>
 #include <thread>
