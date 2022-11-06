@@ -114,7 +114,7 @@ void MessageQueue::serviceb_start()
 //     // only call from App A
 // bool MessageQueue::onEmployeeInfoChanged(const EmployeeInfo& emplinfo) // from ServiceB to AppA
 // {
-//     AppController::getInstance().onEmployeeInfoChanged(emplinfo);
+//     EmployeeInfoModel::getInstance().onEmployeeInfoChanged(emplinfo);
 // }
 // // only call from App A
 // EmployeeInfo MessageQueue::requestEmployeeInfo(const int id){

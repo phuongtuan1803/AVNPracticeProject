@@ -1,10 +1,10 @@
-#include "AppController.h"
-#include "employeelistmodel.h"
+#include "EmployeeInfoModel.h"
+#include "EmployeeListModel.h"
 #include "../common/ipc/shm/shmem.h"
 #include "../common/ipc/mq/mq_ac.h"
 
 
-void AppController::init()
+void EmployeeInfoModel::init()
 {
     m_name = "---";
     m_empid = 0;
@@ -22,7 +22,7 @@ void AppController::init()
     emit qml_scoreChanged();
 }
 
-QList<EmployeeScore> AppController::requestEmployeeScoreList(){
+QList<EmployeeScore> EmployeeInfoModel::requestEmployeeScoreList(){
     QList<EmployeeScore> retval;
     EmployeeScoreList employeeScoreList;
     Shmem::getInstance()->getEmployeeScoreList(employeeScoreList);
@@ -37,21 +37,21 @@ QList<EmployeeScore> AppController::requestEmployeeScoreList(){
 
 };
 
-EmployeeInfo AppController::requestEmployeeInfo(int id){
+EmployeeInfo EmployeeInfoModel::requestEmployeeInfo(int id){
     MessageQueue::getInstance()->requestEmployeeInfo(id);
     // return Database::getInstance().requestEmployeeInfo(id);
 };
 
-EmployeeInfo AppController::requestEmployeeInfoAtIndex(int index){
+EmployeeInfo EmployeeInfoModel::requestEmployeeInfoAtIndex(int index){
     // return Database::getInstance().requestEmployeeInfoAtIndex(index);
     return EmployeeInfo();
 };
 
-void AppController::requestUpdateEmployeeInfo(int id, int asm_score, int cpp_score, int js_score, int opengl_score, int qml_score){
+void EmployeeInfoModel::requestUpdateEmployeeInfo(int id, int asm_score, int cpp_score, int js_score, int opengl_score, int qml_score){
 //    Database::getInstance().requestUpdateEmployeeInfo(id,asm_score, cpp_score,js_score,opengl_score,qml_score);
 };
 
-void AppController::onEmployeeInfoChanged(const EmployeeInfo& emplinfo){
+void EmployeeInfoModel::onEmployeeInfoChanged(const EmployeeInfo& emplinfo){
         std::cout << "onEmployeeInfoChanged: ()" ;
         std::cout << "(" << emplinfo.id << ")" ;
         std::cout << "(" << emplinfo.asm_score << ")" ;

@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>../rc/asm.png</file>
+        <file>../rc/cpp.png</file>
+        <file>../rc/js.png</file>
+        <file>../rc/opengl.png</file>
+        <file>../rc/qml.png</file>
+        <file>../rc/tick.png</file>
+        <file>../rc/x.png</file>
+        <file>ProgrammingScore.qml</file>
+        <file>../rc/Nulo.qml</file>
+    </qresource>
+</RCC>

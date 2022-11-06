@@ -34,7 +34,6 @@ struct SHMEM_DATA_T{
     EmployeeInfo SHMEM_EmployeeInfo;
 };
 #pragma pack(pop)
-
 /* Message Queue */
 // #define SERVER_QUEUE_NAME   "/server"
 #define APPA_QUEUE_NAME   "/appa"
@@ -45,7 +44,6 @@ struct SHMEM_DATA_T{
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10
 
-#define MQ_INVALID                      -1
 #define MQ_REQUESTUPDATEEMPLOYEEINFO    0
 #define MQ_ONEMPLOYEEINFOCHANGED        1
 #define MQ_REQUESTEMPLOYEEINFO          2

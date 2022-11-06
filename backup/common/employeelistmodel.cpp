@@ -1,6 +1,6 @@
-#include "employeelistmodel.h"
+#include "EmployeeListModel.h"
 #include <thread>
-#include "AppController.h"
+#include "EmployeeInfoModel.h"
 int EmployeeListModel::rowCount(const QModelIndex &parent) const{
     return m_employeeList.length();
 }
@@ -80,27 +80,27 @@ Q_INVOKABLE void EmployeeListModel::remove(const int index){
 }
 
 Q_INVOKABLE void EmployeeListModel::updateItem(int id, QList<int> scorelist ){
-    AppController::getInstance().requestUpdateEmployeeInfo(id,scorelist[0],scorelist[1],scorelist[2],scorelist[3],scorelist[4]);
+    EmployeeInfoModel::getInstance().requestUpdateEmployeeInfo(id,scorelist[0],scorelist[1],scorelist[2],scorelist[3],scorelist[4]);
 }
 
 Q_INVOKABLE void EmployeeListModel::refeshItem(int id ){
     // Database::getInstance().loadDatabase("../rc/database.json");
-    m_employeeList = AppController::getInstance().requestEmployeeScoreList();
+    m_employeeList = EmployeeInfoModel::getInstance().requestEmployeeScoreList();
     beginResetModel();
-     AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  this);
+     EmployeeInfoModel::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  this);
 
-//    AppController::getInstance().m_employeeListModel = &this;
-//    AppController::getInstance().employeeListModelChanged();
+//    EmployeeInfoModel::getInstance().m_employeeListModel = &this;
+//    EmployeeInfoModel::getInstance().employeeListModelChanged();
 
-    AppController::getInstance().init();
+    EmployeeInfoModel::getInstance().init();
     endResetModel();
 }
 
 Q_INVOKABLE void EmployeeListModel::select(const int index){
-    AppController::getInstance().requestEmployeeInfo(m_employeeList[index].id);
+    EmployeeInfoModel::getInstance().requestEmployeeInfo(m_employeeList[index].id);
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    AppController::getInstance().requestEmployeeInfo(m_employeeList[index].id); //note
-    QQmlContext *context = AppController::getInstance().m_qmlcontext;
+    EmployeeInfoModel::getInstance().requestEmployeeInfo(m_employeeList[index].id); //note
+    QQmlContext *context = EmployeeInfoModel::getInstance().m_qmlcontext;
 }
 
 Q_INVOKABLE void EmployeeListModel::updateSearch(const QString search_term){
@@ -111,10 +111,10 @@ Q_INVOKABLE void EmployeeListModel::updateSearch(const QString search_term){
     QRegularExpression::PatternOptions options = QRegularExpression::NoPatternOption | QRegularExpression::CaseInsensitiveOption;
     QRegularExpression regularExpression(search_term, options);
     m_proxyModel->setFilterRegularExpression(regularExpression);
-    AppController::getInstance().m_qmlcontext->setContextProperty("employeeFilterModel", m_proxyModel);
+    EmployeeInfoModel::getInstance().m_qmlcontext->setContextProperty("employeeFilterModel", m_proxyModel);
 
-//    AppController::getInstance().m_employeeFilterModel = m_proxyModel;
-//    AppController::getInstance().employeeFilterModelChanged();
+//    EmployeeInfoModel::getInstance().m_employeeFilterModel = m_proxyModel;
+//    EmployeeInfoModel::getInstance().employeeFilterModelChanged();
 
 }
 

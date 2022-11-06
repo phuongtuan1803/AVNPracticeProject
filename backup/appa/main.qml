@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import EmployeeInfoModel 1.0
-import AppController 1.0
 
 Window {
     width: 400
@@ -195,7 +194,7 @@ Window {
                         anchors.fill: parent
                         onClicked: {
                             listView.currentIndex = index
-                            employeeListModel.select(index)
+                            EmployeeInfoModel.select(index)
                         }
                     }
                 }

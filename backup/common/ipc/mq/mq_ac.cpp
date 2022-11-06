@@ -1,6 +1,6 @@
 #include "mq_ac.h"
 #include "../../database.h"
-#include "../../AppController.h"
+#include "../../EmployeeInfoModel.h"
 std::shared_ptr<MessageQueue> MessageQueue::getInstance()
 {
     std::cout << "MessageQueue::getInstance" << std::endl;
@@ -108,7 +108,7 @@ void MessageQueue::appa_start()
 // only call from App A
 bool MessageQueue::onEmployeeInfoChanged(const EmployeeInfo &emplinfo) // from ServiceB to AppA
 {
-    AppController::getInstance().onEmployeeInfoChanged(emplinfo);
+    EmployeeInfoModel::getInstance().onEmployeeInfoChanged(emplinfo);
 }
 // only call from App A
 EmployeeInfo MessageQueue::requestEmployeeInfo(const int id)

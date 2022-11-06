@@ -1,4 +1,4 @@
-#include "sortfilterproxymodel.h"
+#include "SortFilterProxyModel.h"
 #include <QDebug>
 SortFilterProxyModel::SortFilterProxyModel(QObject *parent)
 {

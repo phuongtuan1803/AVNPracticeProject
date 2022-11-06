@@ -52,21 +52,21 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = AppController.cpp \
-		employeelistmodel.cpp \
+SOURCES       = EmployeeInfoModel.cpp \
+		EmployeeListModel.cpp \
 		database.cpp \
 		main.cpp \
-		sortfilterproxymodel.cpp qrc_qml.cpp \
-		moc_employeelistmodel.cpp \
-		moc_sortfilterproxymodel.cpp
-OBJECTS       = AppController.o \
-		employeelistmodel.o \
+		SortFilterProxyModel.cpp qrc_qml.cpp \
+		moc_EmployeeListModel.cpp \
+		moc_SortFilterProxyModel.cpp
+OBJECTS       = EmployeeInfoModel.o \
+		EmployeeListModel.o \
 		database.o \
 		main.o \
-		sortfilterproxymodel.o \
+		SortFilterProxyModel.o \
 		qrc_qml.o \
-		moc_employeelistmodel.o \
-		moc_sortfilterproxymodel.o
+		moc_EmployeeListModel.o \
+		moc_SortFilterProxyModel.o
 DIST          = ../../Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.15.2/gcc_64/mkspecs/common/unix.conf \
 		../../Qt/5.15.2/gcc_64/mkspecs/common/linux.conf \
@@ -242,16 +242,16 @@ DIST          = ../../Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.15.2/gcc_64/mkspecs/features/exceptions.prf \
 		../../Qt/5.15.2/gcc_64/mkspecs/features/yacc.prf \
 		../../Qt/5.15.2/gcc_64/mkspecs/features/lex.prf \
-		appc.pro AppController.h \
+		appc.pro EmployeeInfoModel.h \
 		avnDefs.h \
 		database.h \
-		employeelistmodel.h \
+		EmployeeListModel.h \
 		nlohmann\json.hpp \
-		sortfilterproxymodel.h AppController.cpp \
-		employeelistmodel.cpp \
+		SortFilterProxyModel.h EmployeeInfoModel.cpp \
+		EmployeeListModel.cpp \
 		database.cpp \
 		main.cpp \
-		sortfilterproxymodel.cpp
+		SortFilterProxyModel.cpp
 QMAKE_TARGET  = appc
 DESTDIR       = 
 TARGET        = appc
@@ -634,8 +634,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents AppController.h avnDefs.h database.h employeelistmodel.h nlohmann\json.hpp sortfilterproxymodel.h $(DISTDIR)/
-	$(COPY_FILE) --parents AppController.cpp employeelistmodel.cpp database.cpp main.cpp sortfilterproxymodel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents EmployeeInfoModel.h avnDefs.h database.h EmployeeListModel.h nlohmann\json.hpp SortFilterProxyModel.h $(DISTDIR)/
+	$(COPY_FILE) --parents EmployeeInfoModel.cpp EmployeeListModel.cpp database.cpp main.cpp SortFilterProxyModel.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -682,10 +682,10 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -Wextra -dM -E -o moc_predefs.h ../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_employeelistmodel.cpp moc_sortfilterproxymodel.cpp
+compiler_moc_header_make_all: moc_EmployeeListModel.cpp moc_SortFilterProxyModel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_employeelistmodel.cpp moc_sortfilterproxymodel.cpp
-moc_employeelistmodel.cpp: employeelistmodel.h \
+	-$(DEL_FILE) moc_EmployeeListModel.cpp moc_SortFilterProxyModel.cpp
+moc_EmployeeListModel.cpp: EmployeeListModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \
@@ -774,24 +774,24 @@ moc_employeelistmodel.cpp: employeelistmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QRegularExpression \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		AppController.h \
+		EmployeeInfoModel.h \
 		avnDefs.h \
 		database.h \
 		nlohmann/json.hpp \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		sortfilterproxymodel.h \
+		SortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QSortFilterProxyModel \
-		../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../Qt/5.15.2/gcc_64/include/QtCore/qSortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QAbstractListModel \
 		moc_predefs.h \
 		../../Qt/5.15.2/gcc_64/bin/moc
-	/home/avn/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/avn/AVNPracticeProject/appc/moc_predefs.h -I/home/avn/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/avn/AVNPracticeProject/appc -I/home/avn/Qt/5.15.2/gcc_64/include -I/home/avn/Qt/5.15.2/gcc_64/include/QtQuick -I/home/avn/Qt/5.15.2/gcc_64/include/QtGui -I/home/avn/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/avn/Qt/5.15.2/gcc_64/include/QtQml -I/home/avn/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/avn/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include employeelistmodel.h -o moc_employeelistmodel.cpp
+	/home/avn/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/avn/AVNPracticeProject/appc/moc_predefs.h -I/home/avn/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/avn/AVNPracticeProject/appc -I/home/avn/Qt/5.15.2/gcc_64/include -I/home/avn/Qt/5.15.2/gcc_64/include/QtQuick -I/home/avn/Qt/5.15.2/gcc_64/include/QtGui -I/home/avn/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/avn/Qt/5.15.2/gcc_64/include/QtQml -I/home/avn/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/avn/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include EmployeeListModel.h -o moc_EmployeeListModel.cpp
 
-moc_sortfilterproxymodel.cpp: sortfilterproxymodel.h \
+moc_SortFilterProxyModel.cpp: SortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QSortFilterProxyModel \
-		../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../Qt/5.15.2/gcc_64/include/QtCore/qSortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
@@ -861,7 +861,7 @@ moc_sortfilterproxymodel.cpp: sortfilterproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
 		moc_predefs.h \
 		../../Qt/5.15.2/gcc_64/bin/moc
-	/home/avn/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/avn/AVNPracticeProject/appc/moc_predefs.h -I/home/avn/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/avn/AVNPracticeProject/appc -I/home/avn/Qt/5.15.2/gcc_64/include -I/home/avn/Qt/5.15.2/gcc_64/include/QtQuick -I/home/avn/Qt/5.15.2/gcc_64/include/QtGui -I/home/avn/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/avn/Qt/5.15.2/gcc_64/include/QtQml -I/home/avn/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/avn/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include sortfilterproxymodel.h -o moc_sortfilterproxymodel.cpp
+	/home/avn/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/avn/AVNPracticeProject/appc/moc_predefs.h -I/home/avn/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/avn/AVNPracticeProject/appc -I/home/avn/Qt/5.15.2/gcc_64/include -I/home/avn/Qt/5.15.2/gcc_64/include/QtQuick -I/home/avn/Qt/5.15.2/gcc_64/include/QtGui -I/home/avn/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/avn/Qt/5.15.2/gcc_64/include/QtQml -I/home/avn/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/avn/Qt/5.15.2/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include SortFilterProxyModel.h -o moc_SortFilterProxyModel.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -877,7 +877,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-AppController.o: AppController.cpp AppController.h \
+EmployeeInfoModel.o: EmployeeInfoModel.cpp EmployeeInfoModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
@@ -968,18 +968,18 @@ AppController.o: AppController.cpp AppController.h \
 		database.h \
 		nlohmann/json.hpp \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		sortfilterproxymodel.h \
+		SortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QSortFilterProxyModel \
-		../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../Qt/5.15.2/gcc_64/include/QtCore/qSortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		employeelistmodel.h \
+		EmployeeListModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QRegularExpression \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QAbstractListModel
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AppController.o AppController.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EmployeeInfoModel.o EmployeeInfoModel.cpp
 
-employeelistmodel.o: employeelistmodel.cpp employeelistmodel.h \
+EmployeeListModel.o: EmployeeListModel.cpp EmployeeListModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \
@@ -1068,18 +1068,18 @@ employeelistmodel.o: employeelistmodel.cpp employeelistmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QRegularExpression \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		AppController.h \
+		EmployeeInfoModel.h \
 		avnDefs.h \
 		database.h \
 		nlohmann/json.hpp \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		sortfilterproxymodel.h \
+		SortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QSortFilterProxyModel \
-		../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../Qt/5.15.2/gcc_64/include/QtCore/qSortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QAbstractListModel
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o employeelistmodel.o employeelistmodel.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EmployeeListModel.o EmployeeListModel.cpp
 
 database.o: database.cpp database.h \
 		nlohmann/json.hpp \
@@ -1248,25 +1248,25 @@ main.o: main.cpp ../../Qt/5.15.2/gcc_64/include/QtGui/QGuiApplication \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h \
 		../../Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
 		../../Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
-		AppController.h \
+		EmployeeInfoModel.h \
 		avnDefs.h \
 		database.h \
 		nlohmann/json.hpp \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		sortfilterproxymodel.h \
+		SortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QSortFilterProxyModel \
-		../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../Qt/5.15.2/gcc_64/include/QtCore/qSortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
-		employeelistmodel.h \
+		EmployeeListModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QRegularExpression \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QAbstractListModel
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-sortfilterproxymodel.o: sortfilterproxymodel.cpp sortfilterproxymodel.h \
+SortFilterProxyModel.o: SortFilterProxyModel.cpp SortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QSortFilterProxyModel \
-		../../Qt/5.15.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../Qt/5.15.2/gcc_64/include/QtCore/qSortFilterProxyModel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
@@ -1335,16 +1335,16 @@ sortfilterproxymodel.o: sortfilterproxymodel.cpp sortfilterproxymodel.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/qregularexpression.h \
 		../../Qt/5.15.2/gcc_64/include/QtCore/QDebug
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sortfilterproxymodel.o sortfilterproxymodel.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SortFilterProxyModel.o SortFilterProxyModel.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
-moc_employeelistmodel.o: moc_employeelistmodel.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_employeelistmodel.o moc_employeelistmodel.cpp
+moc_EmployeeListModel.o: moc_EmployeeListModel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_EmployeeListModel.o moc_EmployeeListModel.cpp
 
-moc_sortfilterproxymodel.o: moc_sortfilterproxymodel.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sortfilterproxymodel.o moc_sortfilterproxymodel.cpp
+moc_SortFilterProxyModel.o: moc_SortFilterProxyModel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_SortFilterProxyModel.o moc_SortFilterProxyModel.cpp
 
 ####### Install
 

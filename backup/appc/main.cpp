@@ -1,10 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-//#include "sortfilterproxymodel.h"
-#include "../common/AppController.h"
+//#include "SortFilterProxyModel.h"
+#include "../common/EmployeeInfoModel.h"
 
-#include "../common/employeelistmodel.h"
+#include "../common/EmployeeListModel.h"
 #include "../common/database.h"
 #include "../common/avnDefs.h"
 
@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
     
 
     QQmlContext *context = engine.rootContext();
-    AppController::getInstance().m_qmlcontext = context;
-    AppController::getInstance().m_engine = &engine;
+    EmployeeInfoModel::getInstance().m_qmlcontext = context;
+    EmployeeInfoModel::getInstance().m_engine = &engine;
 
     Database::getInstance().loadDatabase("../rc/database.json");
     EmployeeListModel employeeListModel;
-    employeeListModel.m_employeeList = AppController::getInstance().requestEmployeeScoreList();
-    AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  &employeeListModel);
-    AppController::getInstance().init();
+    employeeListModel.m_employeeList = EmployeeInfoModel::getInstance().requestEmployeeScoreList();
+    EmployeeInfoModel::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  &employeeListModel);
+    EmployeeInfoModel::getInstance().init();
     engine.load(url);
 
     return app.exec();

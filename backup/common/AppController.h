@@ -4,13 +4,13 @@
 #include <vector>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
-//#include "employeelistmodel.h""
+//#include "EmployeeListModel.h""
 #include "avnDefs.h"
 #include "database.h"
-#include "sortfilterproxymodel.h"
+#include "SortFilterProxyModel.h"
 #include <QObject>
 
-class AppController : public QObject
+class EmployeeInfoModel : public QObject
 {
    Q_OBJECT
 
@@ -25,19 +25,19 @@ class AppController : public QObject
     Q_PROPERTY(int qml_score READ qml_score NOTIFY qml_scoreChanged)
 private:
 
-    explicit AppController(QObject *parent = nullptr){
+    explicit EmployeeInfoModel(QObject *parent = nullptr){
     };
 public:
-    ~AppController(){};
-    AppController(AppController &other) = delete;
-    void operator=(const AppController &) = delete;
+    ~EmployeeInfoModel(){};
+    EmployeeInfoModel(EmployeeInfoModel &other) = delete;
+    void operator=(const EmployeeInfoModel &) = delete;
 
-    static AppController& getInstance()
+    static EmployeeInfoModel& getInstance()
     {
-        static AppController singleton_;
+        static EmployeeInfoModel singleton_;
         return singleton_;
     };
-    static AppController instance;
+    static EmployeeInfoModel instance;
 public:
     QQmlContext* m_qmlcontext;
     QQmlApplicationEngine *m_engine;
