@@ -8,7 +8,10 @@ class SortFilterProxyModel : public QSortFilterProxyModel
 
 public:
     SortFilterProxyModel(QObject *parent = nullptr);
-
+    SortFilterProxyModel(const SortFilterProxyModel&){
+    }
+    SortFilterProxyModel& operator=(const SortFilterProxyModel& obj){
+    };
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 

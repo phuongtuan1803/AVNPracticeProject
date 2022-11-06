@@ -36,14 +36,11 @@ bool Database::loadDatabase(const std::string database_file){
 };
 
 EmployeeInfo Database::requestEmployeeInfo(const int id){
-    std::cout << "========== 0: " << id <<std::endl;
     if(m_employeeList.size() == 0){
-        std::cout << "========== 1" <<std::endl;
         return EmployeeInfo();
     }
     for(auto& e : m_employeeList){
         if(e.id == id){
-            std::cout << "========== 2" << e.name <<std::endl;
             return e;
         }
     }

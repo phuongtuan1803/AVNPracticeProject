@@ -1,5 +1,6 @@
 #include "employeelistmodel.h"
-
+#include <thread>
+#include "AppController.h"
 int EmployeeListModel::rowCount(const QModelIndex &parent) const{
     return m_employeeList.length();
 }
@@ -40,18 +41,6 @@ Q_INVOKABLE void EmployeeListModel::addItem(QString name, QList<int> scorelist )
     endInsertRows();
 }
 
-Q_INVOKABLE void EmployeeListModel::updateItem(int id, QList<int> scorelist ){
-    AppController::getInstance().requestUpdateEmployeeInfo(id,scorelist[0],scorelist[1],scorelist[2],scorelist[3],scorelist[4]);
-}
-
-Q_INVOKABLE void EmployeeListModel::refeshItem(int id ){
-    // Database::getInstance().loadDatabase("../rc/database.json");
-    m_employeeList = AppController::getInstance().requestEmployeeScoreList();
-    beginResetModel();
-    AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  this);
-    AppController::getInstance().init();
-    endResetModel();
-}
 
 bool EmployeeListModel::setData(const QModelIndex &index, const QVariant &value, int role){
     if(!index.isValid()){
@@ -83,25 +72,35 @@ QHash<int, QByteArray> EmployeeListModel::roleNames() const{
     return roles;
 }
 
+
 Q_INVOKABLE void EmployeeListModel::remove(const int index){
     beginRemoveRows(QModelIndex(), index, index);
     m_employeeList.removeAt(index);
     endRemoveRows();
 }
 
+Q_INVOKABLE void EmployeeListModel::updateItem(int id, QList<int> scorelist ){
+    AppController::getInstance().requestUpdateEmployeeInfo(id,scorelist[0],scorelist[1],scorelist[2],scorelist[3],scorelist[4]);
+}
+
+Q_INVOKABLE void EmployeeListModel::refeshItem(int id ){
+    // Database::getInstance().loadDatabase("../rc/database.json");
+    m_employeeList = AppController::getInstance().requestEmployeeScoreList();
+    beginResetModel();
+     AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  this);
+
+//    AppController::getInstance().m_employeeListModel = &this;
+//    AppController::getInstance().employeeListModelChanged();
+
+    AppController::getInstance().init();
+    endResetModel();
+}
+
 Q_INVOKABLE void EmployeeListModel::select(const int index){
-    EmployeeInfo employeeInfo = AppController::getInstance().requestEmployeeInfo(m_employeeList[index].id);
-
+    AppController::getInstance().requestEmployeeInfo(m_employeeList[index].id);
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    AppController::getInstance().requestEmployeeInfo(m_employeeList[index].id); //note
     QQmlContext *context = AppController::getInstance().m_qmlcontext;
-
-    // context->setContextProperty("name",  employeeInfo.name);
-    // context->setContextProperty("empid",  employeeInfo.id);
-    // context->setContextProperty("asm_score",  employeeInfo.asm_score);
-    // context->setContextProperty("cpp_score",  employeeInfo.cpp_score);
-    // context->setContextProperty("js_score",  employeeInfo.js_score);
-    // context->setContextProperty("opengl_score",  employeeInfo.opengl_score);
-    // context->setContextProperty("qml_score",  employeeInfo.qml_score);
-    // qDebug() << employeeInfo.name;
 }
 
 Q_INVOKABLE void EmployeeListModel::updateSearch(const QString search_term){
@@ -113,4 +112,9 @@ Q_INVOKABLE void EmployeeListModel::updateSearch(const QString search_term){
     QRegularExpression regularExpression(search_term, options);
     m_proxyModel->setFilterRegularExpression(regularExpression);
     AppController::getInstance().m_qmlcontext->setContextProperty("employeeFilterModel", m_proxyModel);
+
+//    AppController::getInstance().m_employeeFilterModel = m_proxyModel;
+//    AppController::getInstance().employeeFilterModelChanged();
+
 }
+

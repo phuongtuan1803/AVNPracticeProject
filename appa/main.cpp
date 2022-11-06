@@ -8,6 +8,12 @@
 #include "../common/database.h"
 #include "../common/avnDefs.h"
 #include "../common/ipc/mq/mq_ac.h"
+
+static QObject *singletonTypeProvider(QQmlEngine *, QJSEngine *)
+{
+    return &AppController::getInstance();
+}
+
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -23,6 +29,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     
+    qmlRegisterSingletonType<AppController>("AppController", 1, 0, "AppController", singletonTypeProvider);
 
     QQmlContext *context = engine.rootContext();
     AppController::getInstance().m_qmlcontext = context;
@@ -32,16 +39,17 @@ int main(int argc, char *argv[])
     // Database::getInstance().loadDatabase("../rc/database.json");
     EmployeeListModel employeeListModel;
     employeeListModel.m_employeeList = AppController::getInstance().requestEmployeeScoreList();
-    AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  &employeeListModel);
+
+    engine.rootContext()->setContextProperty("app", &AppController::getInstance());
+
+     AppController::getInstance().m_qmlcontext->setContextProperty("employeeListModel",  &employeeListModel);
+//    AppController::getInstance().m_employeeListModel = &employeeListModel;
+//    AppController::getInstance().employeeListModelChanged();
+
     AppController::getInstance().init();
     MessageQueue::getInstance()->appa_start();
 
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    QObject::connect(MessageQueue::getInstance(),SIGNAL(employeeInfoChanged(EmployeeInfo&)),&AppController::getInstance(),SLOT(onEmployeeInfoChanged(EmployeeInfo&)));
+//    QObject::connect(MessageQueue::getInstance(),SIGNAL(employeeInfoChanged(EmployeeInfo&)),&AppController::getInstance(),SLOT(onEmployeeInfoChanged(EmployeeInfo&)));
     engine.load(url);    
     return app.exec();
 }

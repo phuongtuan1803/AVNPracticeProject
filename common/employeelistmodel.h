@@ -9,7 +9,7 @@
 #include <QDebug>
 #include <cstring>
 #include "avnDefs.h"
-
+#include "sortfilterproxymodel.h"
 class EmployeeListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -37,8 +37,9 @@ public:
     Q_INVOKABLE void updateSearch(const QString search_term);
 
     QList<EmployeeScore> m_employeeList;
-    QString search_term;
     SortFilterProxyModel *m_proxyModel;
+    QString search_term;
+
 
 };
 

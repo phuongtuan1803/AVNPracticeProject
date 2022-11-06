@@ -3,17 +3,23 @@
 #include "../common/ipc/shm/shmem.h"
 #include "../common/ipc/mq/mq_ac.h"
 
+
 void AppController::init()
 {
-        // EmployeeInfo empinfo = AppController::getInstance().requestEmployeeInfoAtIndex(0);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("name",  empinfo.name);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("empid",  empinfo.id);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("asm_score",  empinfo.asm_score);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("cpp_score",  empinfo.cpp_score);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("js_score",  empinfo.js_score);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("opengl_score",  empinfo.opengl_score);
-        // AppController::getInstance().m_qmlcontext->setContextProperty("qml_score",  empinfo.qml_score);
+    m_name = "---";
+    m_empid = 0;
+    m_asm_score  = 0;
+    m_cpp_score  = 0;
+    m_js_score   = 0;
+    m_opengl_score = 0;
+    m_qml_score    = 0;
 
+    emit nameChanged();
+    emit asm_scoreChanged();
+    emit cpp_scoreChanged();
+    emit js_scoreChanged();
+    emit opengl_scoreChanged();
+    emit qml_scoreChanged();
 }
 
 QList<EmployeeScore> AppController::requestEmployeeScoreList(){
@@ -54,12 +60,20 @@ void AppController::onEmployeeInfoChanged(const EmployeeInfo& emplinfo){
         std::cout << "(" << emplinfo.opengl_score << ")" ;
         std::cout << "(" << emplinfo.qml_score << ")" ;
         std::cout << std::endl;
-        AppController::getInstance().m_qmlcontext->setContextProperty("name",  emplinfo.name);
-        AppController::getInstance().m_qmlcontext->setContextProperty("empid",  emplinfo.id);
-        AppController::getInstance().m_qmlcontext->setContextProperty("asm_score",  emplinfo.asm_score);
-        AppController::getInstance().m_qmlcontext->setContextProperty("cpp_score",  emplinfo.cpp_score);
-        AppController::getInstance().m_qmlcontext->setContextProperty("js_score",  emplinfo.js_score);
-        AppController::getInstance().m_qmlcontext->setContextProperty("opengl_score",  emplinfo.opengl_score);
-        AppController::getInstance().m_qmlcontext->setContextProperty("qml_score",  emplinfo.qml_score);
-}
 
+        m_name          = emplinfo.name;
+        m_empid         = emplinfo.id         ;
+        m_asm_score     = emplinfo.asm_score     ;
+        m_cpp_score     = emplinfo.cpp_score     ;
+        m_js_score      = emplinfo.js_score      ;
+        m_opengl_score  = emplinfo.opengl_score  ;
+        m_qml_score     = emplinfo.qml_score     ;
+
+        emit nameChanged();
+        emit asm_scoreChanged();
+        emit cpp_scoreChanged();
+        emit js_scoreChanged();
+        emit opengl_scoreChanged();
+        emit qml_scoreChanged();
+
+}

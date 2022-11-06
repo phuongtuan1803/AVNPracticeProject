@@ -22,7 +22,7 @@
 
 class MessageQueue
 {
-    Q_OBJECT
+//    Q_OBJECT
 
 private:
     MessageQueue();
@@ -51,8 +51,8 @@ private:
 
     std::condition_variable cv;
     std::mutex m;
-signals:
-   void employeeInfoChanged(EmployeeInfo& emplinfo);
+//signals:
+//   void employeeInfoChanged(EmployeeInfo& emplinfo);
 };
 
 #endif //MESSAGEQUEUE_H_

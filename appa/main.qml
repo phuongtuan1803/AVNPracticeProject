@@ -1,63 +1,67 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import AppController 1.0
 
 Window {
     width: 400
     height: 700
+    minimumWidth: 400
+    maximumWidth: 400
+    minimumHeight: 700
     visible: true
     title: qsTr("Viewer A")
 
     Rectangle{
-        //        Nulo{}
         anchors.fill: parent
         Column {
             id: column
-            x: 0
-            width: parent.width
-            height: parent.height
+            anchors.fill: parent
             spacing: 10
 
             Text{
                 id: headerTxt
                 height: 50
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: name
+                text: AppController.name === "" ? "---" : AppController.name
                 font.pixelSize: 30
                 font.bold: true
+                onTextChanged: {
+                    console.log(AppController.name)
+                }
             }
             ProgrammingScore{
                 id : asmID
                 height: 50
                 programming_img : "/../rc/asm.png"
                 programming_text : "Assembly"
-                programming_score: asm_score
+                programming_score: AppController.asm_score
             }
             ProgrammingScore{
                 id : cppID
                 height: 50
                 programming_img  : "/../rc/cpp.png"
                 programming_text : "C++"
-                programming_score: cpp_score
+                programming_score: AppController.cpp_score
             }
             ProgrammingScore{
                 id : jsID
                 height: 50
                 programming_img  : "/../rc/js.png"
                 programming_text : "Javascript"
-                programming_score: js_score
+                programming_score: AppController.js_score
             }
             ProgrammingScore{
                 id : openglID
                 programming_img  : "/../rc/opengl.png"
                 programming_text : "OpenGL"
-                programming_score: opengl_score
+                programming_score: AppController.opengl_score
             }
             ProgrammingScore{
                 id: qmlId
                 programming_img  : "/../rc/qml.png"
                 programming_text : "QML"
-                programming_score: qml_score
+                programming_score: AppController.qml_score
             }
             Timer {
                 id: loadingTimer
@@ -81,7 +85,7 @@ Window {
                     listView.visible = false
                     loadingTimer.start()
                     console.log("Timer started!")
-                    employeeListModel.refeshItem(empid,[ parseInt(asmID.programming_score_input)
+                    AppController.refeshItem(empid,[ parseInt(asmID.programming_score_input)
                                                 , parseInt(cppID.programming_score_input)
                                                 , parseInt(jsID.programming_score_input)
                                                 , parseInt(openglID.programming_score_input)
@@ -104,7 +108,7 @@ Window {
 
                     font.styleName: "Medium Italic"
                     onTextChanged: {
-                        employeeListModel.updateSearch(searchtextedit.text)
+                        AppController.updateSearch(searchtextedit.text)
                     }
                 }
             }
@@ -113,7 +117,7 @@ Window {
                 height: 30
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: listView.top
+                anchors.top: rowSearch.bottom
                 Text {
                     text: ""
                     width: 1
@@ -129,19 +133,19 @@ Window {
                     anchors.verticalCenter: parent.verticalCenter
                     font.bold: true
                 }
-                Button {
-                    text: "Append"
-                    width: 40
-                    onClicked: employeeListModel.addItem("tuan", [1,2,3,4,5])
-                }
+                // Button {
+                //     text: "Append"
+                //     width: 40
+                //     onClicked: AppController.addItem("tuan", [1,2,3,4,5])
+                // }
                 spacing: 100
             }
             Rectangle{
                 id: loadingRect
                 width: parent.width
-                height: 220
                 visible: !listView.visible
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: headerRow.bottom
                 anchors.bottom: parent.bottom
                 BusyIndicator {
                     id: busyIndicator
@@ -153,8 +157,8 @@ Window {
                 id: listView
                 objectName: "listView"
                 width: parent.width
-                height: 220
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: headerRow.bottom
                 anchors.bottom: parent.bottom
                 flickableDirection: Flickable.VerticalFlick
                 boundsBehavior: Flickable.StopAtBounds
@@ -190,7 +194,7 @@ Window {
                         anchors.fill: parent
                         onClicked: {
                             listView.currentIndex = index
-                            employeeListModel.select(index)
+                            AppController.select(index)
                         }
                     }
                 }
