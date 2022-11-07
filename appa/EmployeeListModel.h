@@ -11,18 +11,18 @@
 #include "SortFilterProxyModel.h"
 #include "AppController.h"
 #include "mq_a.h"
-#include "EmployeeInfoModel.h"
+//#include "EmployeeInfoModel.h"
 #include "../common/ipc/shm/shmem.h"
 
 class EmployeeListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    EmployeeListModel(QObject *parent = nullptr) : QAbstractListModel(parent){
+    explicit EmployeeListModel(QObject *parent = nullptr) : QAbstractListModel(parent){
         m_proxyModel = new SortFilterProxyModel(AppController::getInstance()->m_engine);
         m_proxyModel->setSourceModel(this);
     };
-
+    ~EmployeeListModel(){}
     enum EmployeeListRoles{
         NameRole = Qt::UserRole + 1,
         AvgScoreRole
@@ -39,6 +39,11 @@ public:
     QString search_term;
 
 
+    Q_INVOKABLE void remove(const int index);
+    //    Q_INVOKABLE void updateItem(int id, QList<int> scorelist );
+    Q_INVOKABLE void refeshItem(int id);
+    Q_INVOKABLE void select(const int index);
+    Q_INVOKABLE void updateSearch(const QString search_term);
 };
 
 #endif // EMPLOYEELISTMODEL_H

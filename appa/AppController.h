@@ -13,10 +13,10 @@ class AppController  : public QObject
 {
     Q_OBJECT
 private:
-    AppController();
-
+    AppController(QObject *parent = nullptr){
+    };
 public:
-    virtual ~AppController();
+    ~AppController(){};
     static std::shared_ptr<AppController> getInstance();
 
     QList<EmployeeScore> requestEmployeeScoreList();
@@ -27,11 +27,6 @@ public:
     QQmlApplicationEngine *m_engine;
     SortFilterProxyModel *m_proxyModel;
 
-    Q_INVOKABLE void remove(const int index);
-    //    Q_INVOKABLE void updateItem(int id, QList<int> scorelist );
-    Q_INVOKABLE void refeshItem(int id);
-    Q_INVOKABLE void select(const int index);
-    Q_INVOKABLE void updateSearch(const QString search_term);
 };
 
 #endif // APPCONTROLLER_H

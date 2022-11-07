@@ -29,14 +29,14 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     
     qmlRegisterSingletonType<EmployeeInfoModel>("EmployeeInfoModel", 1, 0, "EmployeeInfoModel", singletonTypeProvider);
-    qmlRegisterSingletonType<AppController>("AppController", 1, 0, "AppController", singletonTypeProvider);
+//    qmlRegisterSingletonType<AppController>("AppController", 1, 0, "AppController", singletonTypeProvider);
 
     QQmlContext *context = engine.rootContext();
     AppController::getInstance()->m_qmlcontext = context;
     AppController::getInstance()->m_engine = &engine;
     AppController::getInstance()->init();
     engine.rootContext()->setContextProperty("employeeinfo", &EmployeeInfoModel::getInstance());
-    engine.rootContext()->setContextProperty("app", AppController::getInstance());
+//    engine.rootContext()->setContextProperty("app", AppController::getInstance());
     MessageQueueA::getInstance()->start_receive();
     engine.load(url);
     return app.exec();
